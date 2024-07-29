@@ -1,1 +1,1 @@
-# eco-sun-solutions
+# EcoSun Solutions
