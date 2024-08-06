@@ -2,7 +2,7 @@ package com.ecosun.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ecosun.entities.Service;
+import com.ecosun.model.Service;
 
-public interface ServiceRepository extends JpaRepository<Service, Long>{
+public interface ServiceRepository extends JpaRepository<Service, Long> {
 }

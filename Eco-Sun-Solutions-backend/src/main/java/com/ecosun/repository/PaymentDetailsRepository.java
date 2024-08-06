@@ -2,8 +2,8 @@ package com.ecosun.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ecosun.entities.PaymentDetails;
+import com.ecosun.model.PaymentDetails;
 
-public interface PaymentDetailsRepository extends JpaRepository<PaymentDetails, Long>{
+public interface PaymentDetailsRepository extends JpaRepository<PaymentDetails, Long> {
 
 }

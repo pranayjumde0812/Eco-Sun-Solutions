@@ -2,8 +2,8 @@ package com.ecosun.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ecosun.entities.UserOrder;
+import com.ecosun.model.Order;
 
-public interface UserOrderRepository extends JpaRepository<UserOrder, Long>{
+public interface UserOrderRepository extends JpaRepository<Order, Long> {
 
 }

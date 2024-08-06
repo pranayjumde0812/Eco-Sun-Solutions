@@ -2,7 +2,7 @@ package com.ecosun.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ecosun.entities.Mechanic;
+import com.ecosun.model.Mechanic;
 
-
-public interface MechanicRepository extends JpaRepository<Mechanic, Long> {}
+public interface MechanicRepository extends JpaRepository<Mechanic, Long> {
+}
