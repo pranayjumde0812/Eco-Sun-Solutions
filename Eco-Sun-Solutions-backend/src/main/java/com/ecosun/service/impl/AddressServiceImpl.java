@@ -1,0 +1,54 @@
+package com.ecosun.service.impl;
+
+import com.ecosun.dto.AddressDTO;
+import com.ecosun.model.Address;
+import com.ecosun.repository.AddressRepository;
+import com.ecosun.service.AddressService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class AddressServiceImpl implements AddressService {
+    @Autowired
+    private AddressRepository addressRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Override
+    public List<AddressDTO> getAllAddresses() {
+        List<Address> addresses = addressRepository.findAll();
+        return addresses.stream().map(address -> modelMapper.map(address, AddressDTO.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public AddressDTO getAddressById(Long addressId) {
+        Address address = addressRepository.findById(addressId).orElseThrow(() -> new RuntimeException("Address not found"));
+        return modelMapper.map(address, AddressDTO.class);
+    }
+
+    @Override
+    public AddressDTO createAddress(AddressDTO addressDTO) {
+        Address address = modelMapper.map(addressDTO, Address.class);
+        address = addressRepository.save(address);
+        return modelMapper.map(address, AddressDTO.class);
+    }
+
+    @Override
+    public AddressDTO updateAddress(Long addressId, AddressDTO addressDTO) {
+        Address address = addressRepository.findById(addressId).orElseThrow(() -> new RuntimeException("Address not found"));
+        modelMapper.map(addressDTO, address);
+        address = addressRepository.save(address);
+        return modelMapper.map(address, AddressDTO.class);
+    }
+
+    @Override
+    public void deleteAddress(Long addressId) {
+        Address address = addressRepository.findById(addressId).orElseThrow(() -> new RuntimeException("Address not found"));
+        addressRepository.delete(address);
+    }
+}
