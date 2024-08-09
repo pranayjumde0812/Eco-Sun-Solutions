@@ -1,8 +1,10 @@
 package com.ecosun.controller;
 
+import com.ecosun.dto.ApiResponse;
 import com.ecosun.dto.UserDTO;
 import com.ecosun.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,32 +14,38 @@ import java.util.List;
 @RequestMapping("/users")
 //@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
-    @GetMapping
-    public List<UserDTO> getAllUsers() {
-        return userService.getAllUsers();
-    }
+	@GetMapping
+	public ResponseEntity<?> getAllUsers() {
 
-    @GetMapping("/{id}")
-    public UserDTO getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
-    }
+		List<UserDTO> allUsers = userService.getAllUsers();
+		return new ResponseEntity<>(allUsers, HttpStatus.OK);
+	}
 
-    @PostMapping
-    public UserDTO createUser(@RequestBody UserDTO userDTO) {
-        return userService.createUser(userDTO);
-    }
+	@GetMapping("/{userId}")
+	public ResponseEntity<?> getUserById(@PathVariable Long userId) {
+		UserDTO userById = userService.getUserById(userId);
+		return new ResponseEntity<>(userById, HttpStatus.OK);
+	}
 
-    @PutMapping("/{id}")
-    public UserDTO updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
-        return userService.updateUser(id, userDTO);
-    }
+	@PostMapping
+	public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) {
+		UserDTO createUser = userService.createUser(userDTO);
+		return new ResponseEntity<>(new ApiResponse("User Created Successfully", true), HttpStatus.CREATED);
+	}
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
-        return ResponseEntity.noContent().build();
-    }
+	@PutMapping("/{userId}")
+	public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
+
+		UserDTO updateUser = userService.updateUser(userId, userDTO);
+		return new ResponseEntity<>(updateUser, HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{userId}")
+	public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
+		userService.deleteUser(userId);
+		return new ResponseEntity<>(new ApiResponse("User deleted successfully", true), HttpStatus.OK);
+	}
 }

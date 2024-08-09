@@ -1,4 +1,4 @@
-package com.ecosun.custom_exceptions;
+package com.ecosun.exceptions;
 
 public class InvalidCredentialsException extends RuntimeException {
 	public InvalidCredentialsException(String mesg) {

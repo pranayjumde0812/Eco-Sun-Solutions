@@ -65,9 +65,9 @@ public class User {
     @Column(name="addresses")
     private List<Address> addresses = new ArrayList<>();
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-    @Column(name="orders")
-    private List<Order> orders = new ArrayList<>();
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+//    @Column(name="orders")
+//    private List<Order> orders = new ArrayList<>();
 
     @CreationTimestamp //adds current date when the entity is created(only once!)
 	@Column(name="creation_date")
