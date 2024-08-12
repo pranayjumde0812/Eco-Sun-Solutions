@@ -6,12 +6,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.ecosun.exceptions.ResourceNotFoundException;
 import com.ecosun.model.User;
 import com.ecosun.repository.UserRepository;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService { // step 2
+public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -20,11 +19,9 @@ public class UserDetailsServiceImpl implements UserDetailsService { // step 2
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		User user = userRepository.findByEmail(username)
-				.orElseThrow(() -> new ResourceNotFoundException("User Not found"));
+				.orElseThrow(() -> new UsernameNotFoundException("Email not found !!!!!"));
 
-		CustomUserDetailsConfig customUserDetailsConfig = new CustomUserDetailsConfig(user);
-
-		return customUserDetailsConfig;
+		return new CustomUserDetails(user);
 	}
 
 }

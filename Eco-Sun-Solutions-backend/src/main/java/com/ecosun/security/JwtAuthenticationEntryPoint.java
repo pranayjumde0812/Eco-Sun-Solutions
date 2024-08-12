@@ -11,7 +11,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint { // step 4
+public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
@@ -19,6 +19,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint { /
 
 		// send error message : SC 401
 		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
+
 	}
 
 }

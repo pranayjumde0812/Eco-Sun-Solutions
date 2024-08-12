@@ -3,59 +3,69 @@ package com.ecosun.security;
 import java.util.Collection;
 import java.util.List;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.ecosun.model.User;
 
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
-public class CustomUserDetailsConfig implements UserDetails { // step 1
+public class CustomUserDetails implements UserDetails {
 
 	private User user;
 
-	public CustomUserDetailsConfig(User user) {
-		super();
+	public CustomUserDetails(User user) {
 		this.user = user;
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(user.getRole());
-		return List.of(simpleGrantedAuthority);
+		// Convert the role to SimpleGrantedAuthority
+		return List.of(new SimpleGrantedAuthority(user.getRole()));
 	}
 
 	@Override
 	public String getPassword() {
+
 		return user.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
+
 		return user.getEmail();
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
+
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
+
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
+
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
+
 		return true;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public Long getUserId() {
+
+		return user.getUserId();
 	}
 
 }
