@@ -1,11 +1,14 @@
 package com.ecosun.service.impl;
 
 import com.ecosun.dto.UserDTO;
+import com.ecosun.dto.request.UserSignupResquestDTO;
+import com.ecosun.dto.response.UserResponseDTO;
 import com.ecosun.model.User;
 import com.ecosun.repository.UserRepository;
 import com.ecosun.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +21,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 
 	@Override
 	public List<UserDTO> getAllUsers() {
@@ -34,10 +40,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO createUser(UserDTO userDTO) {
-		User user = modelMapper.map(userDTO, User.class);
+	public UserResponseDTO createUser(UserSignupResquestDTO userSignupDto) {
+		User user = modelMapper.map(userSignupDto, User.class);
+		user.setPassword(encoder.encode(user.getPassword()));
+		user.setRole("ROLE_CUSTOMER");
 		user = userRepository.save(user);
-		return modelMapper.map(user, UserDTO.class);
+		return modelMapper.map(user, UserResponseDTO.class);
 	}
 
 	@Override

@@ -14,7 +14,7 @@
 //
 //import com.ecosun.dto.JwtAuthRequest;
 //import com.ecosun.dto.JwtAuthResponse;
-//import com.ecosun.security_.JwtUtils;
+//import com.ecosun.security.JwtUtils;
 //
 //@RestController
 //@RequestMapping("/api/v1/auth")
@@ -36,7 +36,6 @@
 //
 //		UserDetails userDetails = this.detailsService.loadUserByUsername(authRequest.getUsername());
 //
-//		String token = this.jwtUtils.generateJwtToken(userDetails);
 //
 //		JwtAuthResponse authResponse = new JwtAuthResponse();
 //		authResponse.setToken(token);

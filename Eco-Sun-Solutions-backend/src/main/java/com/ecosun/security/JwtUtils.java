@@ -25,8 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JwtUtils {
 
-	@Value("${SECRET_KEY}")
-	private String jwtSecret;
+//	@Value("${SECRET_KEY}")
+//	private String jwtSecret;
 
 	@Value("${EXP_TIMEOUT}")
 	private int jwtExpirationMs;
@@ -36,9 +36,9 @@ public class JwtUtils {
 	@PostConstruct
 	public void init() {
 		// Generate a secure key for HS512
-//		key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+		key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
-		key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
+//		key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
 
 	}
 

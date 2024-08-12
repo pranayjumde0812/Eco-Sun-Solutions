@@ -30,11 +30,11 @@ public class UserController {
 		return new ResponseEntity<>(userById, HttpStatus.OK);
 	}
 
-	@PostMapping
-	public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) {
-		UserDTO createUser = userService.createUser(userDTO);
-		return new ResponseEntity<>(new ApiResponse("User Created Successfully", true), HttpStatus.CREATED);
-	}
+//	@PostMapping
+//	public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) {
+//		UserDTO createUser = userService.createUser(userDTO);
+//		return new ResponseEntity<>(new ApiResponse("User Created Successfully", true), HttpStatus.CREATED);
+//	}
 
 	@PutMapping("/{userId}")
 	public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
