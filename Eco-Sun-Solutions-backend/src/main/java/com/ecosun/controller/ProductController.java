@@ -1,6 +1,7 @@
 package com.ecosun.controller;
 
 import com.ecosun.dto.ProductDTO;
+import com.ecosun.dto.request.ProductRequestDto;
 import com.ecosun.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ProductDTO createProduct(@RequestBody ProductDTO productDTO) {
+    public ProductDTO createProduct(@RequestBody ProductRequestDto productDTO) {
         return productService.createProduct(productDTO);
     }
 

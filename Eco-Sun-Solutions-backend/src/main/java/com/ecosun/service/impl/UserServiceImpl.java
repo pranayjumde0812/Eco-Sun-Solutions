@@ -2,6 +2,7 @@ package com.ecosun.service.impl;
 
 import com.ecosun.dto.UserDTO;
 import com.ecosun.dto.request.UserSignupResquestDTO;
+import com.ecosun.dto.request.UserUpdateRequestDto;
 import com.ecosun.dto.response.UserResponseDTO;
 import com.ecosun.model.User;
 import com.ecosun.repository.UserRepository;
@@ -49,8 +50,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO updateUser(Long id, UserDTO userDTO) {
-		User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+	public UserDTO updateUser(Long id, UserUpdateRequestDto userDTO) {
+		User user = userRepository.findById(userDTO.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
 		modelMapper.map(userDTO, user);
 		user = userRepository.save(user);
 		return modelMapper.map(user, UserDTO.class);
