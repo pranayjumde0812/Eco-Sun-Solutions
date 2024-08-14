@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+  }
+  
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .navbar {
+    margin-bottom: 20px;
+  }
+  
+  .about-section {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .admin-section {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .footer {
+    background-color: #343a40;
+    color: #ffffff;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+  }
+  
+  h2 {
+    margin-top: 0;
+  }
+  
+  button:disabled {
+    opacity: 0.5;
+  }
+  
+  .text-danger {
+    color: #dc3545;
+  }
+  
