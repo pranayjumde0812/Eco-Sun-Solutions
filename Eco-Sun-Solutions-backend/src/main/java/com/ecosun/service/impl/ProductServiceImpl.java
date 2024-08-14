@@ -1,20 +1,28 @@
 package com.ecosun.service.impl;
 
-import com.ecosun.dto.ProductDTO;
-import com.ecosun.model.Product;
-import com.ecosun.repository.ProductRepository;
-import com.ecosun.service.ProductService;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import com.ecosun.dto.ProductDTO;
+import com.ecosun.dto.request.ProductRequestDto;
+import com.ecosun.exceptions.ResourceNotFoundException;
+import com.ecosun.model.Product;
+import com.ecosun.model.ProductCategory;
+import com.ecosun.repository.ProductCategoryRepository;
+import com.ecosun.repository.ProductRepository;
+import com.ecosun.service.ProductService;
 
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ProductCategoryRepository productCategoryRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -32,8 +40,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO createProduct(ProductDTO productDTO) {
-        Product product = modelMapper.map(productDTO, Product.class);
+    public ProductDTO createProduct(ProductRequestDto productRequestDto) {
+    	ProductCategory category = productCategoryRepository.findById(productRequestDto.getCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+
+    	
+        Product product = modelMapper.map(productRequestDto, Product.class);
+        
+        product.setCategory(category);
+        product.setAvailability("true");
+
         product = productRepository.save(product);
         return modelMapper.map(product, ProductDTO.class);
     }

@@ -2,6 +2,7 @@ package com.ecosun.controller;
 
 import com.ecosun.dto.ApiResponse;
 import com.ecosun.dto.UserDTO;
+import com.ecosun.dto.request.UserUpdateRequestDto;
 import com.ecosun.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,7 @@ public class UserController {
 //	}
 
 	@PutMapping("/{userId}")
-	public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
+	public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody UserUpdateRequestDto userDTO) {
 
 		UserDTO updateUser = userService.updateUser(userId, userDTO);
 		return new ResponseEntity<>(updateUser, HttpStatus.OK);
