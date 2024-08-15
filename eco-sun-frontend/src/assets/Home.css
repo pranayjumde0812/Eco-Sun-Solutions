@@ -1,0 +1,76 @@
+/* Home.css */
+
+/* Container for the home page */
+.home-container {
+  background-color: #f8f9fa; /* Light background color for the page */
+  padding: 0;
+}
+
+/* Navbar row styling */
+.navbar-row {
+  background-color: #343a40; /* Dark background color for the navbar */
+  color: white;
+  padding: 10px 20px;
+}
+
+/* Styling for the brand name */
+.brand-name {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Align the buttons to the right */
+.navbar-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Styling for the auth buttons */
+.auth-button {
+  margin-left: 10px;
+}
+
+/* Photo section styling */
+.photo-section {
+  position: relative;
+  margin: 20px 0;
+}
+
+/* Styling for the image container */
+.image-container {
+  position: relative;
+}
+
+/* Styling for the image */
+.solar-image {
+  width: 100%;
+  height: auto;
+  max-height: 400px; /* Adjust as needed */
+  object-fit: cover;
+}
+
+/* Overlay styling */
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Styling for the start button */
+.start-button {
+  margin-top: 20px;
+}
+
+/* Footer section styling */
+.footer-section {
+  background-color: #343a40;
+  color: white;
+  padding: 10px 20px;
+}
