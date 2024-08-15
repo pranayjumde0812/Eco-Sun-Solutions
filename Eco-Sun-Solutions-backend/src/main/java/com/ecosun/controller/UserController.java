@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/users")
+@RequestMapping("/users")
 //@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
+	
 	@Autowired
 	private UserService userService;
 
@@ -39,6 +40,7 @@ public class UserController {
 //		return new ResponseEntity<>(new ApiResponse("User Created Successfully", true), HttpStatus.CREATED);
 //	}
 
+	@PreAuthorize("hasRole('CUSTOMER')")
 	@PutMapping("/{userId}")
 	public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody UserUpdateRequestDto userDTO) {
 
@@ -46,6 +48,7 @@ public class UserController {
 		return new ResponseEntity<>(updateUser, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{userId}")
 	public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
 		userService.deleteUser(userId);

@@ -12,6 +12,7 @@ import java.util.List;
 @RequestMapping("/addresses")
 //@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AddressController {
+	
     @Autowired
     private AddressService addressService;
 

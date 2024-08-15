@@ -40,7 +40,7 @@ public class SecurityConfig {
 		.authorizeRequests()
 		.antMatchers("/**", "/auth/signup", "/auth/signin", "/v*/api-doc*/**", "/swagger-ui/**").permitAll()
 		.antMatchers(HttpMethod.OPTIONS).permitAll()
-		.antMatchers("/admin/**").hasRole("ADMIN")
+//		.antMatchers("/admin/**").hasRole("ADMIN")
 //		.antMatchers("/").hasAuthority("CUSTOMER")
 		.anyRequest()
 		.authenticated()

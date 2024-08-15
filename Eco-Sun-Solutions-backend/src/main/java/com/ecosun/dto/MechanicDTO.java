@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 @Data
 public class MechanicDTO {
+	
     private Long mechanicId;
     private String name;
     private String mobileNumber;
@@ -13,4 +14,5 @@ public class MechanicDTO {
     private String specialization;
     private LocalDate creationDate;
     private LocalDate updatedOn;
+    
 }
