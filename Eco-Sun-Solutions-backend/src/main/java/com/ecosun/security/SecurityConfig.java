@@ -34,11 +34,20 @@ public class SecurityConfig {
 		http.cors()
 		.and()
 		.csrf().disable()
+		.exceptionHandling()
+		.authenticationEntryPoint(enrtyPoint)
+		.and()
 		.authorizeRequests()
 		.antMatchers("/**", "/auth/signup", "/auth/signin", "/v*/api-doc*/**", "/swagger-ui/**").permitAll()
-		.antMatchers(HttpMethod.OPTIONS).permitAll().antMatchers("/products/purchase/**").hasRole("CUSTOMER")
-		.antMatchers("/products/add").hasRole("ADMIN").anyRequest().authenticated().and().sessionManagement()
-	    .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+		.antMatchers(HttpMethod.OPTIONS).permitAll()
+		.antMatchers("/admin/**").hasRole("ADMIN")
+//		.antMatchers("/").hasAuthority("CUSTOMER")
+		.anyRequest()
+		.authenticated()
+		.and()
+		.sessionManagement()
+	    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+	    .and()
 		.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();

@@ -5,6 +5,7 @@ import com.ecosun.dto.request.UserSignupResquestDTO;
 import com.ecosun.dto.request.UserUpdateRequestDto;
 import com.ecosun.dto.response.UserResponseDTO;
 import com.ecosun.model.User;
+import com.ecosun.model.UserRole;
 import com.ecosun.repository.UserRepository;
 import com.ecosun.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -44,7 +45,7 @@ public class UserServiceImpl implements UserService {
 	public UserResponseDTO createUser(UserSignupResquestDTO userSignupDto) {
 		User user = modelMapper.map(userSignupDto, User.class);
 		user.setPassword(encoder.encode(user.getPassword()));
-		user.setRole("ROLE_CUSTOMER");
+		user.setRole(UserRole.ROLE_CUSTOMER);
 		user = userRepository.save(user);
 		return modelMapper.map(user, UserResponseDTO.class);
 	}
