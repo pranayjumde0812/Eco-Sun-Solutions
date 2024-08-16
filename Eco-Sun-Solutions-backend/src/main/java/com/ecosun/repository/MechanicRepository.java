@@ -8,4 +8,5 @@ import com.ecosun.model.Mechanic;
 @Repository
 public interface MechanicRepository extends JpaRepository<Mechanic, Long> {
 	
+	
 }
