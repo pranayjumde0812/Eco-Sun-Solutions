@@ -1,22 +1,24 @@
-/* Home.css */
-
 /* Container for the home page */
 .home-container {
-  background-color: #f8f9fa; /* Light background color for the page */
+  background-color: #f8f9fa;
   padding: 0;
 }
 
 /* Navbar row styling */
 .navbar-row {
-  background-color: #343a40; /* Dark background color for the navbar */
+  background-color: #343a40;
   color: white;
   padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 /* Styling for the brand name */
 .brand-name {
   font-size: 2rem;
   font-weight: bold;
+  margin: 0;
 }
 
 /* Align the buttons to the right */
@@ -29,6 +31,33 @@
 /* Styling for the auth buttons */
 .auth-button {
   margin-left: 10px;
+}
+
+/* Custom button styling */
+.custom-auth-button {
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 16px;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-width: 2px;
+}
+
+.custom-auth-button:hover {
+  background-color: #ffb400;
+  border-color: #ffb400;
+  color: white;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.custom-auth-button:active {
+  background-color: #e09e00;
+  border-color: #e09e00;
+  box-shadow: none;
+  transform: translateY(0);
 }
 
 /* Photo section styling */
@@ -46,7 +75,7 @@
 .solar-image {
   width: 100%;
   height: auto;
-  max-height: 400px; /* Adjust as needed */
+  max-height: 400px;
   object-fit: cover;
 }
 
@@ -58,7 +87,7 @@
   transform: translate(-50%, -50%);
   color: white;
   text-align: center;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border-radius: 10px;
 }
@@ -73,4 +102,6 @@
   background-color: #343a40;
   color: white;
   padding: 10px 20px;
+  text-align: center; /* Center-aligns the text */
 }
+

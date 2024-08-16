@@ -1,17 +1,116 @@
 .login-container {
-    margin-top: 50px;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  
-  button {
-    margin-top: 20px;
-  }
-  
+  background-color: #f8f9fa;
+  padding: 0;
+}
+
+/* Navbar row styling */
+.navbar-row {
+  background-color: #343a40;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Styling for the brand name */
+.brand-name {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Align the buttons to the right */
+.navbar-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Styling for the auth buttons */
+.auth-button {
+  margin-left: 10px;
+}
+
+/* Custom button styling */
+.custom-auth-button {
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 16px;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-width: 2px;
+}
+
+.custom-auth-button:hover {
+  background-color: #ffb400;
+  border-color: #ffb400;
+  color: white;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.custom-auth-button:active {
+  background-color: #e09e00;
+  border-color: #e09e00;
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+/* Photo section styling */
+.photo-section {
+  position: relative;
+  margin: 20px 0;
+}
+
+/* Styling for the image container */
+.image-container {
+  position: relative;
+}
+
+/* Styling for the image */
+.solar-image {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+/* Overlay styling */
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Login form styling */
+.login-form {
+  margin-top: 20px;
+  text-align: left;
+}
+
+/* Styling for the form labels and inputs */
+.login-form .form-label {
+  color: #f8f9fa;
+}
+
+.login-form .form-control {
+  border-radius: 20px;
+  border-width: 2px;
+}
+
+/* Footer section styling */
+.footer-section {
+  background-color: #343a40;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+}
