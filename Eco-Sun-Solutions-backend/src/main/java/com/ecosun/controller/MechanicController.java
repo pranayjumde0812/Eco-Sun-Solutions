@@ -18,7 +18,7 @@ public class MechanicController {
 	private MechanicService mechanicService;
 
 	@GetMapping
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public List<MechanicDTO> getAllMechanics() {
 		return mechanicService.getAllMechanics();
 	}
@@ -30,19 +30,19 @@ public class MechanicController {
 	}
 
 	@PostMapping
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public MechanicDTO createMechanic(@RequestBody MechanicDTO mechanicDTO) {
 		return mechanicService.createMechanic(mechanicDTO);
 	}
 
 	@PutMapping("/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public MechanicDTO updateMechanic(@PathVariable Long id, @RequestBody MechanicDTO mechanicDTO) {
 		return mechanicService.updateMechanic(id, mechanicDTO);
 	}
 
 	@DeleteMapping("/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Void> deleteMechanic(@PathVariable Long id) {
 		mechanicService.deleteMechanic(id);
 		return ResponseEntity.noContent().build();

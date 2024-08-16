@@ -17,7 +17,7 @@ public class PaymentDetailsController {
     private PaymentDetailsService paymentDetailsService;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<PaymentDetailsDTO> getAllPaymentDetails() {
         return paymentDetailsService.getAllPaymentDetails();
     }
@@ -33,13 +33,13 @@ public class PaymentDetailsController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public PaymentDetailsDTO updatePaymentDetails(@PathVariable Long id, @RequestBody PaymentDetailsDTO paymentDetailsDTO) {
         return paymentDetailsService.updatePaymentDetails(id, paymentDetailsDTO);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> deletePaymentDetails(@PathVariable Long id) {
         paymentDetailsService.deletePaymentDetails(id);
         return ResponseEntity.noContent().build();

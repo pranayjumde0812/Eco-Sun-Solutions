@@ -17,7 +17,7 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<OrderDTO> getAllOrders() {
         return orderService.getAllOrders();
     }
@@ -28,19 +28,19 @@ public class OrderController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('CUSTOMER')")
+    @PreAuthorize("hasAuthority('CUSTOMER')")
     public OrderDTO createOrder(@RequestBody OrderDTO orderDTO) {
         return orderService.createOrder(orderDTO);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('CUSTOMER')")
+    @PreAuthorize("hasAuthority('CUSTOMER')")
     public OrderDTO updateOrder(@PathVariable Long id, @RequestBody OrderDTO orderDTO) {
         return orderService.updateOrder(id, orderDTO);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
         orderService.deleteOrder(id);
         return ResponseEntity.noContent().build();

@@ -35,13 +35,13 @@ public class ServiceController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ServiceDTO updateService(@PathVariable Long id, @RequestBody ServiceDTO serviceDTO) {
         return serviceService.updateService(id, serviceDTO);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> deleteService(@PathVariable Long id) {
         serviceService.deleteService(id);
         return ResponseEntity.noContent().build();

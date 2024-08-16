@@ -20,7 +20,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping
 	public ResponseEntity<?> getAllUsers() {
 
@@ -40,7 +40,7 @@ public class UserController {
 //		return new ResponseEntity<>(new ApiResponse("User Created Successfully", true), HttpStatus.CREATED);
 //	}
 
-	@PreAuthorize("hasRole('CUSTOMER')")
+	@PreAuthorize("hasAuthority('CUSTOMER')")
 	@PutMapping("/{userId}")
 	public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody UserUpdateRequestDto userDTO) {
 
@@ -48,7 +48,7 @@ public class UserController {
 		return new ResponseEntity<>(updateUser, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@DeleteMapping("/{userId}")
 	public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
 		userService.deleteUser(userId);
