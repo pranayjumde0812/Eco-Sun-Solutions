@@ -33,7 +33,7 @@ function AddProduct() {
 
   const handleAddProduct = async () => {
     try {
-      // Construct the product object with all required fields
+      const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
       const product = {
         productName,
         categoryId: parseInt(categoryId),  // Ensure this is an integer
@@ -47,14 +47,18 @@ function AddProduct() {
         dimensions,
         rating: parseFloat(rating)
       };
-
-      // Log product object to ensure data is correct before making the request
+  
       console.log('Adding product:', product);
-
-      const response = await axios.post('http://localhost:9292/products', product);
+  
+      const response = await axios.post('http://localhost:9292/products', product, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+        },
+      });
+  
       console.log('Product added:', response.data);
       setSuccessMessage('Product added successfully!');
-
+  
       // Reset form fields
       setProductName('');
       setCategoryId('');
@@ -80,7 +84,7 @@ function AddProduct() {
       }
     }
   };
-
+  
   return (
     <div className="container mt-5">
       <h2>Add Product</h2>

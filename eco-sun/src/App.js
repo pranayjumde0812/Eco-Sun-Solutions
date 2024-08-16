@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 import Home from './pages/Home';
 import AdminHome from './pages/AdminHome';
 import Login from './pages/Login';
@@ -13,33 +14,33 @@ import ContactUs from './pages/ContactUs';
 import Payment from './pages/Payment';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import { UserContext } from './UserContext';
+import ProtectedRoute from './context/ProtectedRoute';
 import './styles/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
 function App() {
-  const { user } = useContext(UserContext);
-
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={user?.role === 'admin' ? <AdminHome /> : <Home />} />
-        <Route path="/admin" element={<AdminHome />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/categories" element={<Categories />} />
-        <Route path="/add-category" element={<AddCategory />} />
-        <Route path="/add-product" element={<AddProduct />} />
-        <Route path="/manage-users" element={<ManageUsers />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path="/contact" element={<ContactUs />} />
-        <Route path="/payment" element={<Payment />} />
-      </Routes>
-      <Footer />
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Navbar />
+        <div className="app-container">
+          <Routes>
+            <Route path="/" element={<ProtectedRoute element={<Home />} role="CUSTOMER" />} />
+            <Route path="/admin" element={<ProtectedRoute element={<AdminHome />} role="ADMIN" />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/categories" element={<ProtectedRoute element={<Categories />} role="ADMIN" />} />
+            <Route path="/add-category" element={<ProtectedRoute element={<AddCategory />} role="ADMIN" />} />
+            <Route path="/add-product" element={<ProtectedRoute element={<AddProduct />} role="ADMIN" />} />
+            <Route path="/manage-users" element={<ProtectedRoute element={<ManageUsers />} role="ADMIN" />} />
+            <Route path="/orders" element={<ProtectedRoute element={<Orders />} role="CUSTOMER" />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/payment" element={<ProtectedRoute element={<Payment />} role="CUSTOMER" />} />
+          </Routes>
+        </div>
+        <Footer />
+      </Router>
+    </AuthProvider>
   );
 }
-
 export default App;

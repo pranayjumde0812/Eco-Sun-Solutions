@@ -1,12 +1,18 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { UserContext } from '../UserContext';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';  // Import the custom hook
 
 function Navbar() {
-  const { user, setUser } = useContext(UserContext);
+  const { auth, logout } = useAuth();  // Use the custom hook to access context values
+  const [showLogout, setShowLogout] = useState(false);
+  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    setUser(null);
+  const handleLogoutClick = () => {
+    logout(navigate);
+  };
+
+  const toggleLogoutMenu = () => {
+    setShowLogout(!showLogout);
   };
 
   return (
@@ -14,9 +20,9 @@ function Navbar() {
       <Link className="navbar-brand" to="/">ECO SUN Solutions</Link>
       <div className="collapse navbar-collapse">
         <ul className="navbar-nav ml-auto">
-          {user ? (
+          {auth.token ? (
             <>
-              {user.role === 'admin' && (
+              {auth.role === 'ADMIN' && (
                 <>
                   <li className="nav-item">
                     <Link className="nav-link" to="/categories">Categories</Link>
@@ -35,11 +41,21 @@ function Navbar() {
                   </li>
                 </>
               )}
+              {auth.role === 'CUSTOMER' && (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/orders">Orders</Link>
+                </li>
+              )}
               <li className="nav-item">
                 <Link className="nav-link" to="/contact">Contact Us</Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/" onClick={handleLogout}>Logout</Link>
+              <li className="nav-item dropdown">
+                <span className="nav-link dropdown-toggle" onClick={toggleLogoutMenu}>
+                  {auth.user}
+                </span>
+                <div className={`dropdown-menu${showLogout ? ' show' : ''}`} aria-labelledby="dropdownMenuButton">
+                  <button className="dropdown-item" onClick={handleLogoutClick}>Logout</button>
+                </div>
               </li>
             </>
           ) : (

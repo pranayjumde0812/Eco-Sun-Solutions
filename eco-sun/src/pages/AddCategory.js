@@ -9,8 +9,13 @@ function AddCategory() {
 
   const handleAddCategory = async () => {
     try {
+      const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
       const category = { categoryName, categoryDescription };
-      const response = await axios.post('http://localhost:9292/product-categories', category);
+      const response = await axios.post('http://localhost:9292/product-categories', category, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+        },
+      });
       setSuccessMessage('Category added successfully!');
       console.log('Category added:', response.data);
       
@@ -19,20 +24,18 @@ function AddCategory() {
       setCategoryDescription('');
     } catch (error) {
       if (error.response) {
-        // Server responded with a status other than 2xx
         setErrorMessage(`Error: ${error.response.data.message || error.response.statusText}`);
         console.error('Error adding category:', error.response.data);
       } else if (error.request) {
-        // Request was made but no response was received
         setErrorMessage('Error: No response received from the server.');
         console.error('Error adding category:', error.request);
       } else {
-        // Something else caused the error
         setErrorMessage(`Error: ${error.message}`);
         console.error('Error adding category:', error.message);
       }
     }
   };
+  
 
   return (
     <div className="container mt-5">
