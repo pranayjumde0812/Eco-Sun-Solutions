@@ -1,18 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';  // Import the custom hook
+import { useAuth } from '../context/AuthContext';
+import '../styles/Navbar.css'; // Import the CSS file
 
 function Navbar() {
-  const { auth, logout } = useAuth();  // Use the custom hook to access context values
-  const [showLogout, setShowLogout] = useState(false);
+  const { auth, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogoutClick = () => {
     logout(navigate);
-  };
-
-  const toggleLogoutMenu = () => {
-    setShowLogout(!showLogout);
   };
 
   return (
@@ -42,18 +38,23 @@ function Navbar() {
                 </>
               )}
               {auth.role === 'CUSTOMER' && (
-                <li className="nav-item">
-                  <Link className="nav-link" to="/orders">Orders</Link>
-                </li>
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/products">Products</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/orders">My Orders</Link>
+                  </li>
+                </>
               )}
               <li className="nav-item">
                 <Link className="nav-link" to="/contact">Contact Us</Link>
               </li>
               <li className="nav-item dropdown">
-                <span className="nav-link dropdown-toggle" onClick={toggleLogoutMenu}>
+                <span className="nav-link dropdown-toggle">
                   {auth.user}
                 </span>
-                <div className={`dropdown-menu${showLogout ? ' show' : ''}`} aria-labelledby="dropdownMenuButton">
+                <div className="dropdown-menu">
                   <button className="dropdown-item" onClick={handleLogoutClick}>Logout</button>
                 </div>
               </li>

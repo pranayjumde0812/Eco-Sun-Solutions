@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import '../styles/Categories.css'; // Import the CSS file
 
 function Categories() {
   const [categories, setCategories] = useState([]);
@@ -20,11 +21,22 @@ function Categories() {
   return (
     <div className="container mt-5">
       <h2>Manage Categories</h2>
-      <ul>
-        {categories.map((category) => (
-          <li key={category.categoryId}>{category.categoryName}</li>
-        ))}
-      </ul>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Category Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {categories.map((category) => (
+            <tr key={category.categoryId}>
+              <td>{category.categoryId}</td>
+              <td>{category.categoryName}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
