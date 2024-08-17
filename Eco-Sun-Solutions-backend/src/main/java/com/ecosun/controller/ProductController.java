@@ -57,4 +57,12 @@ public class ProductController {
 
 		return new ResponseEntity<>(searchByProductName, HttpStatus.OK);
 	}
+	
+	@GetMapping("/searchByCategoryId/{categoryId}")
+	public ResponseEntity<?> searchProductsByCategoryId(@PathVariable Long categoryId) {
+
+		List<ProductResponseDTO> searchElementByCategoryId = productService.searchProductsByCategoryId(categoryId);
+				
+		return new ResponseEntity<>(searchElementByCategoryId, HttpStatus.OK);
+	}
 }

@@ -11,4 +11,7 @@ import com.ecosun.model.Product;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
 	List<Product> findByProductNameContaining(String productName);
+
+	List<Product> findByCategoryCategoryId(Long categoryId);
+
 }

@@ -19,4 +19,7 @@ public interface ProductService {
 	void deleteProduct(Long productId);
 	
 	List<ProductResponseDTO> searchByProductName(String productName);
+	
+	List<ProductResponseDTO> searchProductsByCategoryId(Long categoryId);
+
 }
