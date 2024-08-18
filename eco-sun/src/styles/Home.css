@@ -1,0 +1,54 @@
+.home {
+    background-color: #e6f7ff;
+    padding: 0;
+  }
+  
+  .solar-info-section {
+    padding: 40px 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin: 50px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .solar-info-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .solar-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .solar-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .solar-card img {
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .solar-card .card-body {
+    text-align: center;
+  }
+  
+  .solar-card .card-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+  
+  .solar-card .card-text {
+    font-size: 1.1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .solar-info-section {
+      padding: 40px 60px;
+    }
+  }
+  

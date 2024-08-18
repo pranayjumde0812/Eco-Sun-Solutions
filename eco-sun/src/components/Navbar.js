@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import '../styles/Navbar.css'; // Import the CSS file
+import '../styles/Navbar.css';
 
 function Navbar() {
   const { auth, logout } = useAuth();
@@ -12,7 +12,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <Link className="navbar-brand" to="/">ECO SUN Solutions</Link>
       <div className="collapse navbar-collapse">
         <ul className="navbar-nav ml-auto">
@@ -49,6 +49,9 @@ function Navbar() {
               )}
               <li className="nav-item">
                 <Link className="nav-link" to="/contact">Contact Us</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/about-us">About Us</Link>
               </li>
               <li className="nav-item dropdown">
                 <span className="nav-link dropdown-toggle">
