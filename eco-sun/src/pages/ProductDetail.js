@@ -9,13 +9,19 @@ function ProductDetail() {
   const { auth } = useAuth();
   const [product, setProduct] = useState(null);
   const [addresses, setAddresses] = useState([]);
-  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState('');
   const [showAddressForm, setShowAddressForm] = useState(false);
-  const [newAddress, setNewAddress] = useState('');
+  const [newAddress, setNewAddress] = useState({
+    address: '',
+    city: '',
+    state: '',
+    postalCode: '',
+    country: '',
+    addressType: 'RESIDENTIAL', // Default type
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch product details by ID
     axios.get(`http://localhost:9292/products/${id}`)
       .then((response) => {
         setProduct(response.data);
@@ -24,9 +30,8 @@ function ProductDetail() {
         console.error('Error fetching product:', error);
       });
 
-    // Fetch user's addresses
     if (auth.userId) {
-      axios.get(`http://localhost:9292/addresses/${auth.userId}`)
+      axios.get(`http://localhost:9292/addresses/user/${auth.userId}`)
         .then((response) => {
           setAddresses(response.data);
         })
@@ -39,9 +44,8 @@ function ProductDetail() {
   const handleBuyNow = () => {
     if (selectedAddress) {
       localStorage.setItem('selectedProduct', JSON.stringify(product));
+      localStorage.setItem('selectedAddress', selectedAddress);
       navigate('/payment');
-    } else {
-      setShowAddressForm(true);
     }
   };
 
@@ -50,16 +54,26 @@ function ProductDetail() {
   };
 
   const handleNewAddressChange = (e) => {
-    setNewAddress(e.target.value);
+    setNewAddress({
+      ...newAddress,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleAddAddress = () => {
-    if (newAddress.trim()) {
-      axios.post(`http://localhost:9292/addresses`, { userId: auth.userId, address: newAddress })
-        .then(() => {
-          setAddresses([...addresses, newAddress]);
-          setNewAddress('');
-          setSelectedAddress(newAddress);
+    if (newAddress.address.trim()) {
+      axios.post(`http://localhost:9292/addresses`, { ...newAddress, userId: auth.userId })
+        .then((response) => {
+          setAddresses([...addresses, response.data]);
+          setSelectedAddress(response.data.addressId);
+          setNewAddress({
+            address: '',
+            city: '',
+            state: '',
+            postalCode: '',
+            country: '',
+            addressType: 'RESIDENTIAL', // Reset to default
+          });
           setShowAddressForm(false);
         })
         .catch((error) => {
@@ -79,10 +93,12 @@ function ProductDetail() {
           <div className="address-selection">
             <h3>Select Address</h3>
             {addresses.length > 0 ? (
-              <select value={selectedAddress || ''} onChange={handleAddressChange}>
+              <select value={selectedAddress} onChange={handleAddressChange}>
                 <option value="">Select an address</option>
-                {addresses.map((address, index) => (
-                  <option key={index} value={address}>{address}</option>
+                {addresses.map((address) => (
+                  <option key={address.addressId} value={address.addressId}>
+                    {`${address.address}, ${address.city}, ${address.state}, ${address.postalCode}, ${address.country}`}
+                  </option>
                 ))}
               </select>
             ) : (
@@ -93,16 +109,65 @@ function ProductDetail() {
               <div className="address-form">
                 <input
                   type="text"
-                  value={newAddress}
+                  name="address"
+                  value={newAddress.address}
                   onChange={handleNewAddressChange}
                   placeholder="Enter new address"
                 />
+                <input
+                  type="text"
+                  name="city"
+                  value={newAddress.city}
+                  onChange={handleNewAddressChange}
+                  placeholder="Enter city"
+                />
+                <input
+                  type="text"
+                  name="state"
+                  value={newAddress.state}
+                  onChange={handleNewAddressChange}
+                  placeholder="Enter state"
+                />
+                <input
+                  type="text"
+                  name="postalCode"
+                  value={newAddress.postalCode}
+                  onChange={handleNewAddressChange}
+                  placeholder="Enter postal code"
+                />
+                <input
+                  type="text"
+                  name="country"
+                  value={newAddress.country}
+                  onChange={handleNewAddressChange}
+                  placeholder="Enter country"
+                />
+                <select
+                  name="addressType"
+                  value={newAddress.addressType}
+                  onChange={handleNewAddressChange}
+                >
+                  <option value="RESIDENTIAL">Residential</option>
+                  <option value="BUSINESS">Business</option>
+                  <option value="BILLING">Billing</option>
+                  <option value="SHIPPING">Shipping</option>
+                </select>
                 <button onClick={handleAddAddress}>Add Address</button>
               </div>
             )}
+
+            {!showAddressForm && (
+              <button onClick={() => setShowAddressForm(true)}>Add New Address</button>
+            )}
           </div>
 
-          <button className="buy-now-button" onClick={handleBuyNow}>Buy Now</button>
+          <button
+            className="buy-now-button"
+            onClick={handleBuyNow}
+            disabled={!selectedAddress}
+          >
+            Buy Now
+          </button>
         </div>
       ) : (
         <p className="loading-text">Loading...</p>

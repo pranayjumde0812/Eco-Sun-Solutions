@@ -47,7 +47,7 @@ function ProductList() {
         <select id="categoryFilter" onChange={handleCategoryChange} value={selectedCategory}>
           <option value="">All Categories</option>
           {categories.map((category) => (
-            <option key={category.categoryId} value={category.categoryId}>
+            <option key={category.categoryId} value={category.categoryId.toString()}>
               {category.categoryName}
             </option>
           ))}
