@@ -25,3 +25,8 @@
   background-color: #343a40;
   color: white;
 }
+
+.table thead th {
+  color: #dee2e6;
+}
+

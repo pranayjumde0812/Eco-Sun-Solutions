@@ -37,16 +37,9 @@ public class PaymentDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_method")
     private PaymentType paymentMethod;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "payment_status")
-    private PaymentStatus paymentStatus;
     
     @Column(name = "transaction_date")
     private LocalDate transactionDate;
-    
-//  @OneToOne
-//  @JoinColumn(name = "order_id", referencedColumnName = "orderId")
-//  private Order order;
+
 	
 }

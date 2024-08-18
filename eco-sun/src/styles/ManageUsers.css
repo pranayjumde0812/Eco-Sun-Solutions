@@ -17,7 +17,9 @@
 }
 
 .table thead th {
+  background-color: #343a40;
   vertical-align: bottom;
+  color: #dee2e6;
 }
 
 .table tbody + tbody {

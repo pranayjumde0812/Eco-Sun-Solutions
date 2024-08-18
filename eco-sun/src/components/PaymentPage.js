@@ -1,70 +1,77 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import '../styles/PaymentPage.css';
 
 function PaymentPage() {
-  const [paymentDetails, setPaymentDetails] = useState({
-    paymentId: '',
-    transactionId: '',
-    paymentMethod: '',
-    transactionDate: '',
-  });
-
+  const { auth } = useAuth();
   const navigate = useNavigate();
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState('');
+  // const [transactionId, setTransactionId] = useState('');
+  // const [paymentId, setPaymentId] = useState('');
+  const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
-    // Generate unique transaction ID and payment ID
-    setPaymentDetails({
-      paymentId: `PAY_${Math.random().toString(36).substr(2, 9)}`,
-      transactionId: `TXN_${Math.random().toString(36).substr(2, 9)}`,
-      transactionDate: new Date().toISOString().split('T')[0], // Current date
-    });
-  }, []);
-
-  const handleChange = (e) => {
-    setPaymentDetails({ ...paymentDetails, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      // Call backend to save payment details
-      const paymentResponse = await axios.post('http://localhost:9292/payment-details', paymentDetails);
-
-      // Optionally, create an order in the backend
-      await axios.post('http://localhost:9292/orders', {
-        productId: 1, // Replace with actual product ID
-        paymentId: paymentResponse.data.paymentId,
-        // Other order details like customer ID, quantity, etc.
-      });
-
-      // Redirect to "My Orders" page
-      navigate('/my-orders');
-    } catch (error) {
-      console.error('Error processing payment:', error);
+    const product = JSON.parse(localStorage.getItem('selectedProduct'));
+    if (product) {
+      setSelectedProduct(product);
+      setTotalAmount(product.unitPrice);
+    } else {
+      navigate('/products');
     }
+  }, [navigate]);
+
+  const handlePayment = () => {
+    const now = new Date().toISOString();
+    const newTransactionId = Math.random().toString(36).substr(2, 9); // Random transaction ID
+    const newPaymentId = Math.random().toString(36).substr(2, 9); // Random payment ID
+
+    axios.post('http://localhost:9292/orders', {
+      orderId: 0,
+      addressId: 1, // Replace with the actual address ID
+      totalAmount: totalAmount,
+      userId: auth.userId,
+      paymentId: newPaymentId,
+      orderDate: now,
+      productIds: [selectedProduct.id],
+      updatedOn: now,
+    })
+    .then(() => {
+      return axios.post('http://localhost:9292/payments', {
+        paymentId: newPaymentId,
+        transactionId: newTransactionId,
+        paymentMethod: paymentMethod,
+        transactionDate: now,
+        amount: totalAmount,
+      });
+    })
+    .then(() => {
+      localStorage.removeItem('selectedProduct');
+      navigate('/my-orders');
+    })
+    .catch((error) => {
+      console.error('Error processing payment:', error);
+    });
   };
 
   return (
     <div className="payment-page-container">
-      <h2>Complete Your Payment</h2>
-      <form className="payment-form" onSubmit={handleSubmit}>
-        <label>
-          Payment Method:
-          <select name="paymentMethod" value={paymentDetails.paymentMethod} onChange={handleChange} required>
-            <option value="" disabled>Select Payment Method</option>
-            <option value="CREDIT_CARD">Credit Card</option>
-            <option value="DEBIT_CARD">Debit Card</option>
-            <option value="BANK_TRANSFER">Bank Transfer</option>
-            <option value="UPI">UPI</option>
-            <option value="CHECK">Check</option>
-            <option value="CASH">Cash</option>
-            <option value="OTHER">Other</option>
-          </select>
-        </label>
-        <button type="submit" className="pay-now-button">Pay Now</button>
-      </form>
+      <h2>Payment Details</h2>
+      <div className="payment-info">
+        <p>Product: {selectedProduct?.productName}</p>
+        <p>Price: ${selectedProduct?.unitPrice}</p>
+        <p>Total Amount: ${totalAmount}</p>
+        <label>Payment Method:</label>
+        <input
+          type="text"
+          value={paymentMethod}
+          onChange={(e) => setPaymentMethod(e.target.value)}
+          placeholder="Enter payment method"
+        />
+        <button onClick={handlePayment}>Pay Now</button>
+      </div>
     </div>
   );
 }

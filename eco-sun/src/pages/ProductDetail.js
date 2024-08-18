@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../styles/ProductDetail.css'; // Import the CSS file
+import { useAuth } from '../context/AuthContext';
+import '../styles/ProductDetail.css';
 
 function ProductDetail() {
   const { id } = useParams();
+  const { auth } = useAuth();
   const [product, setProduct] = useState(null);
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [showAddressForm, setShowAddressForm] = useState(false);
+  const [newAddress, setNewAddress] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,14 +23,49 @@ function ProductDetail() {
       .catch((error) => {
         console.error('Error fetching product:', error);
       });
-  }, [id]);
+
+    // Fetch user's addresses
+    if (auth.userId) {
+      axios.get(`http://localhost:9292/addresses/${auth.userId}`)
+        .then((response) => {
+          setAddresses(response.data);
+        })
+        .catch((error) => {
+          console.error('Error fetching addresses:', error);
+        });
+    }
+  }, [id, auth.userId]);
 
   const handleBuyNow = () => {
-    // Save product details in local storage or context if needed
-    // You might want to save product ID to retrieve it on the payment page
-    localStorage.setItem('selectedProduct', JSON.stringify(product));
-    // Redirect to the custom payment page
-    navigate('/payment');
+    if (selectedAddress) {
+      localStorage.setItem('selectedProduct', JSON.stringify(product));
+      navigate('/payment');
+    } else {
+      setShowAddressForm(true);
+    }
+  };
+
+  const handleAddressChange = (e) => {
+    setSelectedAddress(e.target.value);
+  };
+
+  const handleNewAddressChange = (e) => {
+    setNewAddress(e.target.value);
+  };
+
+  const handleAddAddress = () => {
+    if (newAddress.trim()) {
+      axios.post(`http://localhost:9292/addresses`, { userId: auth.userId, address: newAddress })
+        .then(() => {
+          setAddresses([...addresses, newAddress]);
+          setNewAddress('');
+          setSelectedAddress(newAddress);
+          setShowAddressForm(false);
+        })
+        .catch((error) => {
+          console.error('Error adding address:', error);
+        });
+    }
   };
 
   return (
@@ -34,6 +75,33 @@ function ProductDetail() {
           <h2 className="product-name">{product.productName}</h2>
           <p className="product-description">{product.description}</p>
           <p className="product-price">Price: ${product.unitPrice}</p>
+
+          <div className="address-selection">
+            <h3>Select Address</h3>
+            {addresses.length > 0 ? (
+              <select value={selectedAddress || ''} onChange={handleAddressChange}>
+                <option value="">Select an address</option>
+                {addresses.map((address, index) => (
+                  <option key={index} value={address}>{address}</option>
+                ))}
+              </select>
+            ) : (
+              <p>No addresses available. Please add a new address.</p>
+            )}
+
+            {showAddressForm && (
+              <div className="address-form">
+                <input
+                  type="text"
+                  value={newAddress}
+                  onChange={handleNewAddressChange}
+                  placeholder="Enter new address"
+                />
+                <button onClick={handleAddAddress}>Add Address</button>
+              </div>
+            )}
+          </div>
+
           <button className="buy-now-button" onClick={handleBuyNow}>Buy Now</button>
         </div>
       ) : (

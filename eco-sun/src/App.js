@@ -11,7 +11,7 @@ import AddProduct from './pages/AddProduct';
 import ManageUsers from './pages/ManageUsers';
 // import Orders from './pages/Orders';
 import ContactUs from './pages/ContactUs';
-import Payment from './pages/Payment';
+// import Payment from './pages/Payment';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProtectedRoute from './context/ProtectedRoute';
@@ -46,7 +46,7 @@ function App() {
             <Route path="/products" element={<ProtectedRoute element={<ProductList />} role="CUSTOMER" />} />
             <Route path="/products/:id" element={<ProtectedRoute element={<ProductDetail />} role="CUSTOMER" />} />
             <Route path="/contact" element={<ContactUs />} />
-            <Route path="/payment" element={<ProtectedRoute element={<Payment />} role="CUSTOMER" />} />
+            <Route path="/payment" element={<ProtectedRoute element={<PaymentPage />} role="CUSTOMER" />} />
           </Routes>
         </div>
         <Footer />

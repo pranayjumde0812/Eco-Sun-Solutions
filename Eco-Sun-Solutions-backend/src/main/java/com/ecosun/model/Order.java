@@ -44,8 +44,8 @@ public class Order {
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 	
-	@Column(name = "order_status")
-	private String orderStatus;
+//	@Column(name = "order_status")
+//	private String orderStatus;
 	
 	@Column(name = "total_amount")
 	private Double totalAmount;

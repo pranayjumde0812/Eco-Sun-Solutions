@@ -55,4 +55,22 @@ public class AddressServiceImpl implements AddressService {
 				.orElseThrow(() -> new RuntimeException("Address not found"));
 		addressRepository.delete(address);
 	}
+
+	@Override
+	public List<AddressDTO> findAddressByUserId(Long userId) {
+		List<Address> addresses = addressRepository.findByUserUserId(userId);
+
+		List<AddressDTO> addressDto = addresses.stream().map(address -> modelMapper.map(address, AddressDTO.class))
+				.collect(Collectors.toList());
+		return addressDto;
+	}
+
+//	@Override
+//	public List<AddressDTO> getAddressesByUserId(Long userId) {
+//	    List<Address> addresses = addressRepository.findByUserId(userId);
+//	    return addresses.stream()
+//	            .map(address -> modelMapper.map(address, AddressDTO.class))
+//	            .collect(Collectors.toList());
+//	}
+
 }
