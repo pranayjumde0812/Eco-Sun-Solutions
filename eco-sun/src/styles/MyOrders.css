@@ -1,30 +1,41 @@
 .my-orders-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .my-orders-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .orders-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .order-item {
-    background-color: #f9f9f9;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .order-item p {
-    margin: 5px 0;
-    color: #555;
-  }
-  
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+.orders-list {
+  margin-top: 20px;
+}
+
+.order-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.order-card .card-body {
+  padding: 20px;
+}
+
+.order-card .card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.order-card .card-text p {
+  font-size: 1rem;
+  color: #333;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+.mb-3 {
+  margin-bottom: 1rem;
+}

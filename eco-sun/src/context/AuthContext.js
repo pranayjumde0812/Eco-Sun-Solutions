@@ -9,23 +9,20 @@ export const AuthProvider = ({ children }) => {
         token: localStorage.getItem('token'),
         user: localStorage.getItem('username'),
         role: localStorage.getItem('role'),
-        userId: localStorage.getItem('userId'), // Add userId here
+        userId: localStorage.getItem('userId'), // Ensure this line is here
     });
 
-    const login = (token, user, role, userId, navigate) => {  // Include userId in login function
+    const login = (token, user, role, userId, navigate) => {
         setAuth({ token, user, role, userId });
         localStorage.setItem('token', token);
         localStorage.setItem('username', user);
         localStorage.setItem('role', role);
-        localStorage.setItem('userId', userId); // Store userId in localStorage
+        localStorage.setItem('userId', userId); // Ensure userId is stored
 
         if (role === 'ADMIN') {
             navigate('/admin', { replace: true });
         } else if (role === 'CUSTOMER') {
             navigate('/', { replace: true });
-        } else {
-            console.warn(`Unknown role: ${role}`);
-            navigate('/login', { replace: true });
         }
     };
 
@@ -34,7 +31,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('token');
         localStorage.removeItem('username');
         localStorage.removeItem('role');
-        localStorage.removeItem('userId'); // Remove userId from localStorage
+        localStorage.removeItem('userId'); // Ensure userId is removed on logout
         navigate('/login', { replace: true });
     };
 

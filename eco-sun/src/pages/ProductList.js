@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Container, Row, Col, Card, Form } from 'react-bootstrap';
 import '../styles/ProductList.css'; // Import the CSS file
+import solarImg from '../images/2303.w019.n002.872B.p15.872.jpg'
 
 function ProductList() {
   const [products, setProducts] = useState([]);
@@ -40,34 +42,53 @@ function ProductList() {
     : products;
 
   return (
-    <div className="product-list-container">
-      <h2>Products</h2>
-      <div className="filter-container">
-        <label htmlFor="categoryFilter">Filter by Category:</label>
-        <select id="categoryFilter" onChange={handleCategoryChange} value={selectedCategory}>
-          <option value="">All Categories</option>
-          {categories.map((category) => (
-            <option key={category.categoryId} value={category.categoryId.toString()}>
-              {category.categoryName}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="product-grid">
+    <Container fluid className="product-list-container">
+      <Row className="justify-content-center">
+        <Col md={10} lg={8} className="text-center">
+          <h2 className="page-title">Our Exclusive Products</h2>
+          <Form.Group controlId="categoryFilter" className="filter-container">
+            <Form.Label>Filter by Category:</Form.Label>
+            <Form.Control 
+              as="select" 
+              onChange={handleCategoryChange} 
+              value={selectedCategory}
+              className="category-select"
+            >
+              <option value="">All Categories</option>
+              {categories.map((category) => (
+                <option key={category.categoryId} value={category.categoryId.toString()}>
+                  {category.categoryName}
+                </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row>
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
-            <div key={product.productId} className="product-card">
-              <img src={product.imageUrl} alt={product.productName} />
-              <h3>{product.productName}</h3>
-              <p>Price: ${product.unitPrice}</p>
-              <Link to={`/products/${product.productId}`}>View Details</Link>
-            </div>
+            <Col key={product.productId} md={6} lg={4} xl={3} className="mb-4">
+              <Card className="product-card">
+                <Card.Img variant="top" src={solarImg} alt={product.productName} />
+                <Card.Body>
+                  <Card.Title>{product.productName}</Card.Title>
+                  <Card.Text>
+                    <strong>Price:</strong> ${product.unitPrice}
+                  </Card.Text>
+                  <Link to={`/products/${product.productId}`} className="btn btn-primary">
+                    View Details
+                  </Link>
+                </Card.Body>
+              </Card>
+            </Col>
           ))
         ) : (
-          <p>No products found for the selected category.</p>
+          <Col className="text-center">
+            <p className="no-products">No products found for the selected category.</p>
+          </Col>
         )}
-      </div>
-    </div>
+      </Row>
+    </Container>
   );
 }
 

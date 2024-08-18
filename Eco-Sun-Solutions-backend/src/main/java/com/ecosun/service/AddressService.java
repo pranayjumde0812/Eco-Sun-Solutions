@@ -4,6 +4,7 @@ import com.ecosun.dto.AddressDTO;
 import java.util.List;
 
 public interface AddressService {
+	
 	List<AddressDTO> getAllAddresses();
 
 	AddressDTO getAddressById(Long addressId);

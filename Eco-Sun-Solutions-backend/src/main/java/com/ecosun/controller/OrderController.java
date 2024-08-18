@@ -28,7 +28,7 @@ public class OrderController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('CUSTOMER')")
+//    @PreAuthorize("hasAuthority('CUSTOMER')")
     public OrderDTO createOrder(@RequestBody OrderDTO orderDTO) {
         return orderService.createOrder(orderDTO);
     }
@@ -45,4 +45,11 @@ public class OrderController {
         orderService.deleteOrder(id);
         return ResponseEntity.noContent().build();
     }
+    
+//    @PreAuthorize("hasAuthority('CUSTOMER')")
+    @GetMapping("/orders")
+    public List<OrderDTO> getOrdersForCustomer(@RequestParam Long customerId) {
+        return orderService.getOrdersByCustomerId(customerId);
+    }
+
 }

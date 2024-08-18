@@ -54,4 +54,20 @@ public class UserController {
 		userService.deleteUser(userId);
 		return new ResponseEntity<>(new ApiResponse("User deleted successfully", true), HttpStatus.OK);
 	}
+	
+//	@GetMapping("/findUserId/{email}")
+//	public ResponseEntity<?> getUserIdByEmail(@PathVariable String email) {
+//		Long userIdByEmail = userService.getUserIdByEmail(email);
+//		return new ResponseEntity<>(userIdByEmail, HttpStatus.OK);
+//	}
+	
+	@GetMapping("/findByEmail")
+    public ResponseEntity<Long> getUserIdByEmail(@RequestParam String email) {
+        Long userId = userService.findUserIdByEmail(email);
+        if (userId != null) {
+            return ResponseEntity.ok(userId);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

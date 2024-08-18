@@ -3,6 +3,7 @@ package com.ecosun.service.impl;
 import com.ecosun.dto.AddressDTO;
 import com.ecosun.model.Address;
 import com.ecosun.repository.AddressRepository;
+import com.ecosun.repository.UserRepository;
 import com.ecosun.service.AddressService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class AddressServiceImpl implements AddressService {
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	@Override
 	public List<AddressDTO> getAllAddresses() {
@@ -36,6 +40,9 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	public AddressDTO createAddress(AddressDTO addressDTO) {
 		Address address = modelMapper.map(addressDTO, Address.class);
+		
+		address.setUser(userRepository.findById(addressDTO.getUserId()).get());
+		
 		address = addressRepository.save(address);
 		return modelMapper.map(address, AddressDTO.class);
 	}
@@ -65,7 +72,7 @@ public class AddressServiceImpl implements AddressService {
 		return addressDto;
 	}
 
-//	@Override
+//	@Override		
 //	public List<AddressDTO> getAddressesByUserId(Long userId) {
 //	    List<Address> addresses = addressRepository.findByUserId(userId);
 //	    return addresses.stream()
